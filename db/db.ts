@@ -1,11 +1,11 @@
-import mongoose from 'mongoose'
-import dotenv from "dotenv"
-import { request } from 'http'
-dotenv.config()
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import { request } from "http";
+dotenv.config();
 
-const mongourl = process.env.MONGO_URL ?? ""
+const mongourl = process.env.MONGO_URL ?? "";
 
-mongoose.connect(mongourl)
+mongoose.connect(mongourl);
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -13,59 +13,70 @@ const userSchema = new mongoose.Schema({
     required: true,
     lowercase: true,
     maxLength: 30,
-    trim: true
+    trim: true,
   },
   password: {
     type: String,
     required: true,
-    minLength: 4
-  }
-})
+    minLength: 4,
+  },
+});
 
 const clockSchema = new mongoose.Schema({
   hours: {
     type: Number,
     required: true,
     min: 0,
-    max: 23
+    max: 23,
   },
   minutes: {
     type: Number,
     required: true,
     min: 0,
-    max: 59
+    max: 59,
   },
-})
+});
 
-const roomEnum = ['Ruang Rapat F3', 'Ruang Rapat F6', 'Ruang Kolaborasi Hakim', 'Ruang Kolaborasi Pegawai','Ruang Rapat F2','Ruang Assessment F5','Ruang Assessment F6']
+const roomEnum = [
+  "Ruang Rapat F3",
+  "Ruang Rapat F6",
+  "Ruang Kolaborasi Hakim",
+  "Ruang Kolaborasi Pegawai",
+  "Ruang Rapat F2",
+  "Ruang Assessment F5",
+  "Ruang Assessment F6",
+  "Ruang Serbaguna A5",
+];
+
+const jenisEnum = ["Offline", "Hybrid"];
 
 const bookingSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
+    ref: "User",
   },
   day: {
     type: String,
     lowercase: true,
-    required: true
+    required: true,
   },
   date: {
     type: String,
     lowercase: true,
-    required: true
+    required: true,
   },
   event: {
     type: String,
     lowercase: true,
-    required: true
+    required: true,
   },
   clockStart: {
     type: clockSchema,
-    required: true
+    required: true,
   },
   clockEnd: {
     type: clockSchema,
-    required: true
+    required: true,
   },
   room: {
     type: String,
@@ -73,20 +84,28 @@ const bookingSchema = new mongoose.Schema({
   },
   pic: {
     type: String,
-    required: true
+    required: true,
   },
   kapasitas: {
     type: String,
-    required: true
-  }
-})
+    required: true,
+  },
+  rapat: {
+    type: String,
+    enum: jenisEnum,
+  },
+  catatan: {
+    type: String,
+    required: true,
+  },
+});
 
-const User = mongoose.model("User", userSchema)
-const Booking = mongoose.model("Booking", bookingSchema)
+const User = mongoose.model("User", userSchema);
+const Booking = mongoose.model("Booking", bookingSchema);
 
 const model = {
   User,
-  Booking
-}
+  Booking,
+};
 
-export default model
+export default model;
