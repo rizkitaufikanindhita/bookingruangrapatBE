@@ -32,6 +32,7 @@ const inputSchema = z.object({
   room: z.enum([
     "Ruang Rapat F3",
     "Ruang Rapat F6",
+    "Ruang Rapat F5",
     "Ruang Kolaborasi Hakim",
     "Ruang Kolaborasi Pegawai",
     "Ruang Rapat F2",
